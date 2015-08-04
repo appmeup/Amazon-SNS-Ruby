@@ -33,30 +33,24 @@ string_to_sign = "GET
       })
       
       # a bit misleading but call is still successful even if the status code is not 200
+
       @httpresponse.callback{ success_callback } 
-      @httpresponse.errback{ error_callback } 
+      @httpresponse.errback{ success_callback } 
   end
-  
+
   def http_class
     EventMachine::HttpRequest
   end
   
   
   def success_callback
-    case @httpresponse.response_header.status
-     when 200
-       self.succeed(@httpresponse)
-     when 403
-       raise AuthorizationError
-     when 500
-       raise InternalError
-     when 400
-       raise InvalidParameterError
-     when 404
-       raise NotFoundError
-     else
-       self.fail("Call to Amazon SNS API failed")
-     end #end case
+    puts "RESPONSE:"
+    puts @httpresponse.response
+    if @httpresponse.response_header.status == 200
+      self.succeed(@httpresponse)
+    else
+      self.succeed({response: @httpresponse.response, status: @httpresponse.response_header.status})
+    end
   end
   
   def call_user_success_handler
