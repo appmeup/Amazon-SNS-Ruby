@@ -30,7 +30,7 @@ class Topic
       'AWSAccessKeyId' => AmazeSNS.akey
      }
      generate_request(params) do |response|
-       parsed_response = Crack::XML.parse(response.response)
+       parsed_response = Crack::XML.parse(response.body)
        @arn = parsed_response["CreateTopicResponse"]["CreateTopicResult"]["TopicArn"]
        AmazeSNS.topics[@topic.to_s] = self # add to hash
        AmazeSNS.topics.rehash
@@ -50,7 +50,7 @@ class Topic
       'AWSAccessKeyId' => AmazeSNS.akey
      }
      generate_request(params) do |response|
-       parsed_response = Crack::XML.parse(response.response)
+       parsed_response = Crack::XML.parse(response.body)
        AmazeSNS.topics.delete("#{@topic}")
        AmazeSNS.topics.rehash
      end
@@ -75,7 +75,7 @@ class Topic
      }
 
      generate_request(params) do |response|
-       parsed_response = Crack::XML.parse(response.response) 
+       parsed_response = Crack::XML.parse(response.body) 
        res = parsed_response['GetTopicAttributesResponse']['GetTopicAttributesResult']['Attributes']["entry"]
        outcome = make_hash(res) #res["entry"] is an array of hashes - need to turn it into hash with key value
        self.attributes = outcome
@@ -104,10 +104,10 @@ class Topic
       'AWSAccessKeyId' => AmazeSNS.akey
     }
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response) 
+      parsed_response = Crack::XML.parse(response.body) 
       outcome = parsed_response['SetTopicAttributesResponse']['ResponseMetadata']['RequestId']
       # update the attributes hash if request is successful ...
-      self.attributes["#{opts[:name]}"] = "#{opts[:value]}" if response.response_header.status == 200
+      self.attributes["#{opts[:name]}"] = "#{opts[:value]}" if response.code == 200
     end
     outcome
   end
@@ -128,7 +128,7 @@ class Topic
     }
 
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response)
+      parsed_response = Crack::XML.parse(response.body)
       res = parsed_response['SubscribeResponse']['SubscribeResult']['SubscriptionArn']
     end
     res
@@ -147,7 +147,7 @@ class Topic
     }
 
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response)
+      parsed_response = Crack::XML.parse(response.body)
       res = parsed_response['UnsubscribeResponse']['ResponseMetadata']['RequestId']
     end
     res
@@ -167,7 +167,7 @@ class Topic
     }
 
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response)
+      parsed_response = Crack::XML.parse(response.body)
       arr = parsed_response['ListSubscriptionsByTopicResponse']['ListSubscriptionsByTopicResult']['Subscriptions']['member'] unless (parsed_response['ListSubscriptionsByTopicResponse']['ListSubscriptionsByTopicResult']['Subscriptions'].nil?)
 
       if !(arr.nil?) && (arr.instance_of?(Array))
@@ -205,7 +205,7 @@ class Topic
     }
     
       generate_request(params) do |response|
-        parsed_response = Crack::XML.parse(response.response)
+        parsed_response = Crack::XML.parse(response.body)
         res = parsed_response['AddPermissionResponse']['ResponseMetadata']['RequestId']
       end
     res
@@ -226,7 +226,7 @@ class Topic
     }
     
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response)
+      parsed_response = Crack::XML.parse(response.body)
       res = parsed_response['RemovePermissionResponse']['ResponseMetadata']['RequestId']
     end
     res
@@ -248,7 +248,7 @@ class Topic
     }
 
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response)
+      parsed_response = Crack::XML.parse(response.body)
       res = parsed_response['PublishResponse']['PublishResult']['MessageId']
     end
     res
@@ -268,7 +268,7 @@ class Topic
     }
 
     generate_request(params) do |response|
-      parsed_response = Crack::XML.parse(response.response)
+      parsed_response = Crack::XML.parse(response.body)
       resp = parsed_response['ConfirmSubscriptionResponse']['ConfirmSubscriptionResult']['SubscriptionArn']
       id = parsed_response['ConfirmSubscriptionResponse']['ResponseMetadata']['RequestId']
       arr = [resp,id]
