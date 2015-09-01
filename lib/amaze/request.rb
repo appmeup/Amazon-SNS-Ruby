@@ -34,11 +34,7 @@ string_to_sign = "GET
   def success_callback
     puts "RESPONSE:"
     puts @httpresponse.body
-    if @httpresponse.code == 200
-      @httpresponse
-    else
-      {response: @httpresponse.body, status: @httpresponse.code}
-    end
+    @httpresponse
   end
 
   def error_callback

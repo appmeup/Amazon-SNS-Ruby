@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + "/request"
 require File.dirname(__FILE__) + "/exceptions"
-require "eventmachine"
 require "json"
 
 class Topic
@@ -107,7 +106,7 @@ class Topic
       parsed_response = Crack::XML.parse(response.body) 
       outcome = parsed_response['SetTopicAttributesResponse']['ResponseMetadata']['RequestId']
       # update the attributes hash if request is successful ...
-      self.attributes["#{opts[:name]}"] = "#{opts[:value]}" if response.code == 200
+      self.attributes["#{opts[:name]}"] = "#{opts[:value]}" if response.code.to_s == "200"
     end
     outcome
   end
