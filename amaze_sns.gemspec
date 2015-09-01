@@ -34,16 +34,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<eventmachine>, [">= 0.12.10"])
-      s.add_runtime_dependency(%q<em-http-request>, [">= 0.2.8"])
+      s.add_runtime_dependency(%q<httparty>, ["0.13.1"])
       s.add_runtime_dependency(%q<crack>, [">= 0.1.6"])
       s.add_runtime_dependency(%q<ruby-hmac>, [">= 0.4.0"])
       s.add_runtime_dependency(%q<json>, [">= 1.4.3"])
       s.add_development_dependency(%q<rspec>, [">= 2.0"])
       s.add_development_dependency(%q<webmock>, ["= 1.7.6"])
     else
-      s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
-      s.add_dependency(%q<em-http-request>, [">= 0.2.8"])
+      s.add_runtime_dependency(%q<httparty>, ["0.13.1"])
       s.add_dependency(%q<crack>, [">= 0.1.6"])
       s.add_dependency(%q<ruby-hmac>, [">= 0.4.0"])
       s.add_dependency(%q<json>, [">= 1.4.3"])
@@ -51,8 +49,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<webmock>, ["= 1.7.6"])
     end
   else
-    s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
-    s.add_dependency(%q<em-http-request>, [">= 0.2.8"])
+    s.add_runtime_dependency(%q<httparty>, ["0.13.1"])
     s.add_dependency(%q<crack>, [">= 0.1.6"])
     s.add_dependency(%q<ruby-hmac>, [">= 0.4.0"])
     s.add_dependency(%q<json>, [">= 1.4.3"])
