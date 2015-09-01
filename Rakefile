@@ -11,8 +11,6 @@ begin
     gemspec.homepage = "http://29steps.co.uk"
     gemspec.authors = ["Chee Yeo", "29 Steps UK"]
     gemspec.required_ruby_version = ">= 1.8.6"
-    gemspec.add_dependency('eventmachine', '>= 0.12.10')
-    gemspec.add_dependency("em-http-request", '>= 0.2.8')
     gemspec.add_dependency("crack", '>=0.1.6')
     gemspec.add_dependency "ruby-hmac", ">=0.4.0"
     gemspec.add_dependency "json", ">=1.4.3"

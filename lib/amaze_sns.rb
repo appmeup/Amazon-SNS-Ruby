@@ -2,8 +2,6 @@ autoload 'Logger', 'logger'
 
 $LOAD_PATH.unshift File.dirname(__FILE__)
 
-require "eventmachine"
-require 'em-http'
 require 'crack/xml'
 require "amaze/topic"
 require "amaze/sns_subscription"
